@@ -1,6 +1,7 @@
-from selenium.webdriver.support.ui import WebdriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from data import *
 
 def test_calculator_form(chrome_browser):
@@ -8,13 +9,13 @@ def test_calculator_form(chrome_browser):
     delay_input = chrome_browser.find_element(By.ID, "delay")
     delay_input.clear()
     delay_input.send_keys(45)
-    
+
     chrome_browser.find_element(By.XPATH, "//span[text() = '7']").click()
     chrome_browser.find_element(By.XPATH, "//span[text() = '+']").click()
     chrome_browser.find_element(By.XPATH, "//span[text() = '8']").click()
     chrome_browser.find_element(By.XPATH, "//span[text() = '=']").click()
 
-    WebdriverWait(chrome_browser, 46).until(EC.text_to_be_present_in_element((By.CLASS_NAME,"screen"),"15"))
+    WebDriverWait(chrome_browser, 46)(chrome_browser, 46).until(EC.text_to_be_present_in_element((By.CLASS_NAME,"screen"),"15"))
     result_text = chrome_browser.find_element(By.CLASS_NAME, "screen").text
 
     assert result_text == "15"
