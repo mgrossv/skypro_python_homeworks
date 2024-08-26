@@ -18,9 +18,9 @@ def test_purpage():
         pur_page = PurPage(driver)
 
     price = pur_page.autorization()
-    pur_page.add_product()
+    pur_page.add()
     pur_page.shopping_cart_and_checkout()
-    pur_page.form_of_payment("Гарри", "Поттер", "569985")
+    pur_page.form_of_payment()
     total_price = pur_page.total_price()
     with allure.step("Проверить,что ожидаемая и фактическая стоимость равны"):
         assert price == total_price

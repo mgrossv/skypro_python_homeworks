@@ -11,12 +11,11 @@ db_connection_string = (
     "postgresql://x_clients_user:"
     "95PM5lQE0NfzJWDQmLjbZ45ewrz1fLYa"
     "@dpg-cqsr9ulumphs73c2q40g-a.frankfurt-postgres.render.com/"
-    "x_clients_db_fxd0"
-)
+    "x_clients_db_fxd0")
 company_table = CompanyTable(db_connection_string)
 employee_table = EmployeeTable(db_connection_string)
 
-  # Новая компания
+# Новая компания
 name = 'Новая компания'
 description = 'Совсем новая'
 
@@ -131,7 +130,9 @@ def test_change_employee_by_api():
     new_email = "new_ivan@gmail.com"
     new_url = "url7.com"
     new_is_active = False
-    patched_employee = employee_api.patch_employee(new_employee_id, new_email, new_url,new_is_active)
+    patched_employee = employee_api.patch_employee(new_employee_id,
+                                                   new_email,
+                                                   new_url, new_is_active)
     assert patched_employee["id"] == new_employee_id
     assert patched_employee["email"] == new_email
     assert patched_employee["url"] == new_url
@@ -143,12 +144,13 @@ def test_change_employee_by_api():
     # Удалить нового сотрудника и новую компанию из DB
     employee_table.delete(new_employee_id)
     company_table.delete(new_company_id)
- 
+
     with allure.step('Проверьте исправленную информацию о сотруднике из DB'):
-        
+
         assert employee[0][8] == new_email
         assert employee[0][10] == new_url
         assert employee[0][1] == new_is_active
+
 
 @allure.title('Изменить сотрудника по DB')
 @allure.description('Тестовое изменение сотрудника по DB')
@@ -174,7 +176,7 @@ def test_change_employee_by_db():
     employee = employee_api.get_employee(new_employee_id)
 
     with allure.step('Проверьте исправленную информацию о сотруднике из API'):
-    
+
         assert employee["id"] == new_employee_id
         assert employee["email"] == new_email
         assert employee["avatar_url"] == new_url
